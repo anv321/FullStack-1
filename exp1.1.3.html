@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+      <style>
+    /* (Light theme) */
+    body {
+      margin: 0;
+      font-family: serif;
+      background: #ffffff;
+      color: #111;
+    }
+
+    .dashboard {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 60px 1fr;
+    }
+    .topbar {
+      background: #0bc8d9;
+      color: rgb(37, 29, 29);
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* left title, right button */
+      padding: 0 16px;
+    }
+
+    .topbar button {
+      padding: 8px 12px;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .bottom {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+    }
+
+    .sidebar {
+      background: #142531;
+      color: rgb(198, 198, 198);
+      padding: 16px;
+    }
+
+    .sidebar h3 {
+      margin: 0 0 12px;
+    }
+
+    .main {
+      background: #fff;
+      padding: 16px;
+    }
+
+    /* Dark theme (invert) */
+    body.dark {
+      background: #111;
+      color: #f1f1f1;
+    }
+
+    body.dark .topbar {
+      background: #037988;
+      color: #fff;
+    }
+
+    body.dark .sidebar {
+      background: #09212b;
+      color: #c3cbb3;
+    }
+
+    body.dark .main {
+      background: #000;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+    <div class="dashboard">
+    <header class="topbar">
+      <h2>Admin Dashboard</h2>
+      <button onclick="toggleTheme()">Toggle Theme</button>
+    </header>
+
+    <div class="bottom">
+      <aside class="sidebar">
+        <h3>Navigation</h3>
+        <h3>User</h3>
+        <h3>Analytics</h3>
+        <h3>Settings</h3>
+      </aside>
+
+      <main class="main">
+        <p><h2>HOME</h2>The content is displayed here.</p>
+      </main>
+    </div>
+  </div>    
+</body>
+<script>
+  function toggleTheme() {
+    document.body.classList.toggle("dark");
+  }
+</script>
+</html>

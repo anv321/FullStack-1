@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking App</title>
+    <style>
+        body {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            background: #111617;
+        }
+
+        .bank {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 50px;
+            background: rgb(67, 171, 206);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        input, button {
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 80%;
+            background-color: rgb(228, 232, 237);
+            box-sizing: border-box;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="bank">
+        <h1>Bank Account</h1>
+        <h3>Balance: ₹<span id="balance">1000</span></h3>
+
+        <input type="number" id="amount" placeholder="Enter Amount">
+
+        <button onclick="deposit()">Deposit</button>
+        <button onclick="withdraw()">Withdraw</button>
+    </div>
+
+    <script>
+        let balance = 1000;
+
+        function deposit() {
+            let amt = Number(document.getElementById("amount").value);
+            balance += amt; // balance = balance + amt
+            document.getElementById("balance").innerText = balance;
+        }
+
+        function withdraw() {
+            let amt = Number(document.getElementById("amount").value);
+            if (amt <= balance) {
+                balance -= amt;
+                document.getElementById("balance").innerText = balance;
+            } else {
+                alert("Insufficient Balance");
+            }
+        }
+    </script>
+</body>
+</html>
