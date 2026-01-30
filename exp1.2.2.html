@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Filter</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .box { max-width: 420px; padding: 14px; border: 1px solid #ccc; border-radius: 10px; }
+    .products { margin-top: 12px; display: grid; gap: 8px; }
+    .item { padding: 10px; border-radius: 8px; background: #f3f3f3; }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h3>Product Filter</h3>
+
+    <label>
+      Category:
+      <select id="category">
+        <option value="all">All categories</option>
+        <option value="electronics">Electronics</option>
+        <option value="clothing">Clothing</option>
+      </select>
+    </label>
+
+    <div class="products">
+      <div class="item" data-cat="clothing">Jeans</div>
+      <div class="item" data-cat="clothing">Shirt</div>
+      <div class="item" data-cat="electronics">Laptop</div>
+      <div class="item" data-cat="electronics">Phone</div>
+    </div>
+  </div>
+
+<script>
+  const select = document.getElementById("category");
+  const items = document.querySelectorAll(".item");
+
+  select.addEventListener("change", () => {
+    const chosen = select.value;
+    items.forEach((item) => {
+      const cat = item.dataset.cat;
+      item.style.display = (chosen === "all" || chosen === cat) ? "block" : "none";
+    });
+  });
+</script>
+
+</body>
+</html>
+

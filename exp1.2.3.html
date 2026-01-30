@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SVG Drawing Pad</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background:#f3f3f3; display:flex; justify-content:center; padding:30px; }
+    .card { width: 420px; background:#fff; padding:14px; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,.12); }
+    .top { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    button { padding:8px 14px; border:0; border-radius:8px; background:#1e73ff; color:#fff; cursor:pointer; }
+    #clear { background:#444; }
+    input[type="color"] { width:44px; height:38px; border:0; padding:0; background:transparent; cursor:pointer; }
+    svg { margin-top:12px; width:100%; height:260px; border:2px dashed #d7d7d7; border-radius:12px; background:#fff; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="top">
+      <button id="undo">Undo</button>
+      <button id="clear">Clear</button>
+      <label>Color: <input id="pick" type="color" value="#1e73ff"></label>
+    </div>
+
+    <svg id="pad" viewBox="0 0 420 260"></svg>
+  </div>
+
+<script>
+  const svg = document.getElementById("pad");
+  const undoBtn = document.getElementById("undo");
+  const clearBtn = document.getElementById("clear");
+  const picker = document.getElementById("pick");
+
+  const svgns = "http://www.w3.org/2000/svg";
+  const strokes = [];              // store paths for undo
+  let drawing = false;
+  let currentPath = null;
+  let d = "";
+  let color = picker.value;
+
+  function getMousePosition(evt) {
+    const pt = svg.createSVGPoint();
+    pt.x = evt.clientX;
+    pt.y = evt.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  }
+
+  picker.addEventListener("input", () => {
+    color = picker.value;          // hex like #rrggbb
+  });
+
+  svg.addEventListener("mousedown", (e) => {
+    drawing = true;
+    const p = getMousePosition(e);
+
+    currentPath = document.createElementNS(svgns, "path");
+    currentPath.setAttribute("fill", "none");
+    currentPath.setAttribute("stroke", color);
+    currentPath.setAttribute("stroke-width", "4");
+    currentPath.setAttribute("stroke-linecap", "round");
+    currentPath.setAttribute("stroke-linejoin", "round");
+
+    d = `M ${p.x} ${p.y}`;
+    currentPath.setAttribute("d", d); // d defines the path shape [web:220]
+    svg.appendChild(currentPath);
+    strokes.push(currentPath);
+  });
+
+  svg.addEventListener("mousemove", (e) => {
+    if (!drawing || !currentPath) return;
+    const p = getMousePosition(e);
+    d += ` L ${p.x} ${p.y}`;        // add a line segment
+    currentPath.setAttribute("d", d);
+  });
+
+  function stopDrawing() {
+    drawing = false;
+    currentPath = null;
+    d = "";
+  }
+
+  svg.addEventListener("mouseup", stopDrawing);
+  svg.addEventListener("mouseleave", stopDrawing);
+
+  undoBtn.addEventListener("click", () => {
+    const last = strokes.pop();
+    if (last) last.remove();
+  });
+
+  clearBtn.addEventListener("click", () => {
+    strokes.forEach(p => p.remove());
+    strokes.length = 0;
+  });
+</script>
+
+</body>
+</html>
