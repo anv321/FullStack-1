@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "iPhone 15 Pro",
+    "price": 999,
+    "category": "smartphones",
+    "image": "iphone15.jpg",
+    "description": "Latest iPhone with A17 Pro chip"
+  },
+  {
+    "id": 2,
+    "name": "Samsung Galaxy S24",
+    "price": 899,
+    "category": "smartphones",
+    "image": "galaxy24.jpg",
+    "description": "Flagship Android with AI features"
+  },
+  {
+    "id": 3,
+    "name": "MacBook Air M3",
+    "price": 1299,
+    "category": "laptops",
+    "image": "macbook.jpg",
+    "description": "Ultra-thin laptop with M3 chip"
+  },
+  {
+    "id": 4,
+    "name": "Dell XPS 13",
+    "price": 1099,
+    "category": "laptops",
+    "image": "dellxps.jpg",
+    "description": "Premium ultrabook with OLED display"
+  }
+]
