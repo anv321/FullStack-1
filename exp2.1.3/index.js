@@ -1,32 +1,26 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 import express from 'express';
-import connectDB from './src/config/db.js';
-import categoryRoutes from './src/routes/categoryRoutes.js';
-import productRoutes from './src/routes/productRoutes.js';
-
-// Load environment variables from .env file if present
+import cors from 'cors';
+import productsRouter from './routes/products.js';
 
 const app = express();
 
-// middleware
+app.use(cors());
 app.use(express.json());
 
-// mount routers
-app.use('/api/categories', categoryRoutes);
-app.use('/api/products', productRoutes);
+app.use('/api/products', productsRouter);
 
-// basic health check
 app.get('/', (req, res) => {
-  res.send('E-commerce catalog API is running');
+  res.json({ 
+    message: 'E-commerce Catalog API v1.0',
+    endpoints: {
+      all: '/api/products',
+      category: '/api/products/smartphones', 
+      product: '/api/products/1'
+    }
+  });
 });
 
-const PORT = process.env.PORT || 5000;
-
-// connect to database then start server
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
-  });
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
